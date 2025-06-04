@@ -1,0 +1,2 @@
+# (Opcional) Ignorar archivos grandes de modelos si no quieres subirlos
+*.pkl

@@ -1,2 +1,14 @@
+# Ignorar el entorno virtual
+env/
+
+# Ignorar archivos compilados de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignorar archivos de configuración sensibles
+env.json
+
 # (Opcional) Ignorar archivos grandes de modelos si no quieres subirlos
 *.pkl
+

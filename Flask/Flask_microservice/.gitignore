@@ -12,3 +12,4 @@ env.json
 # (Opcional) Ignorar archivos grandes de modelos si no quieres subirlos
 *.pkl
 
+Flask_microservice/env.json

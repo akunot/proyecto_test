@@ -28,9 +28,10 @@ services:
       context: ./Email/Email_microservice
       dockerfile: ../Dockerfile
     ports:
-      - "5001:5000"
+      - "8002:80"
     networks:
       - app-network
+
 
   mysql:
     image: mysql:8.0

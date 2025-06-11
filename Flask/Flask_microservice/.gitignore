@@ -13,3 +13,4 @@ env.json
 *.pkl
 
 Flask_microservice/env.json
+Flask_microservice/env.jsonexample

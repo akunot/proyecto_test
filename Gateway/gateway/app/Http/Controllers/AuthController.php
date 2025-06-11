@@ -24,6 +24,13 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+
+        $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|string|min:8|confirmed'
+        ]);
+
         $role = "2"; 
         $user= User::create([
         'role_id' => $role,
@@ -36,7 +43,7 @@ class AuthController extends Controller
             'message' => 'Usuario creado con éxito',
             'user' => $user
             ]);
-        }
+    }
     
     public function logout()
         {

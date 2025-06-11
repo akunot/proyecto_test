@@ -3,16 +3,17 @@ version: '3.8'
 services:
   laravel:
     build:
-      context: ./Gateway/gateway
-      dockerfile: ../Dockerfile
+      context: ./Gateway/gateway  # Correcto
+      dockerfile: ../Dockerfile   # Verifica que esto sea necesario
     ports:
       - "8000:80"
     volumes:
-      - ./app:/var/www/html
+      - ./Gateway/gateway:/var/www/html  # Cambiado de ./app a ./Gateway/gateway
     networks:
       - app-network
     depends_on:
       - mysql
+    working_dir: /var/www/html  # Añade esto para asegurar el directorio de trabajo
 
   flask:
     build:
@@ -34,18 +35,25 @@ services:
 
 
   mysql:
-    image: mysql:8.0
+    image: mysql:8.0.42  # Versión específica más estable
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: nombre_base
-      MYSQL_USER: user
-      MYSQL_PASSWORD: pass
+      MYSQL_DATABASE: base_proyecto
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      TZ: America/Lima  # Añade zona horaria si es necesario
     ports:
       - "3306:3306"
     networks:
       - app-network
     volumes:
       - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
 
 networks:
   app-network:

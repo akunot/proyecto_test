@@ -65,4 +65,48 @@ class FlaskMicroserviceTest extends TestCase
         $response->assertStatus(401)
             ->assertJson(['message' => 'Unauthenticated.']);
     }
+
+    /** @test */
+public function envia_correo_si_sentimiento_es_negativo()
+{
+    Http::fake([
+        env('MICROSERVICE_FLASK_URL') . '/predecir' => Http::response([
+            'sentimiento' => 'Negativo'
+        ], 200),
+
+        env('MICROSERVICE_EMAIL_URL') => Http::response([
+            'mensaje' => 'Correo enviado correctamente'
+        ], 200),
+    ]);
+
+    $response = $this->withHeaders([
+        'Authorization' => 'Bearer ' . $this->token,
+    ])->postJson('/api/comments', [
+        'texto' => 'Estoy triste y frustrado con este servicio.'
+    ]);
+
+    $response->assertStatus(200);
+    $this->assertEquals('Negativo', $response['sentimiento']);
+}
+
+/** @test */
+public function no_envia_correo_si_sentimiento_no_es_negativo()
+{
+    Http::fake([
+        env('MICROSERVICE_FLASK_URL') . '/predecir' => Http::response([
+            'sentimiento' => 'Positivo'
+        ], 200),
+
+        env('MICROSERVICE_EMAIL_URL') => Http::response(null, 500),
+    ]);
+
+    $response = $this->withHeaders([
+        'Authorization' => 'Bearer ' . $this->token,
+    ])->postJson('/api/comments', [
+        'texto' => 'Hoy es un buen día'
+    ]);
+
+    $response->assertStatus(200);
+    $this->assertEquals('Positivo', $response['sentimiento']);
+}
 }

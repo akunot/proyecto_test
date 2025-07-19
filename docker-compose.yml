@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile 
     ports:
       - "8000:80"
-    volumes:
-      - ./Gateway/gateway:/var/www/html
+    #volumes:
+    #  - ./Gateway/gateway:/var/www/html
     networks:
       - app-network
     depends_on:

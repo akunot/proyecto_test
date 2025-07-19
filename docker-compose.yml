@@ -3,8 +3,8 @@ version: '3.8'
 services:
   laravel:
     build:
-      context: ./Gateway/gateway  
-      dockerfile: ../Dockerfile 
+      context: ./Gateway
+      dockerfile: Dockerfile 
     ports:
       - "8000:80"
     volumes:

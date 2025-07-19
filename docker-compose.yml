@@ -3,17 +3,17 @@ version: '3.8'
 services:
   laravel:
     build:
-      context: ./Gateway/gateway  # Correcto
-      dockerfile: ../Dockerfile   # Verifica que esto sea necesario
+      context: ./Gateway
+      dockerfile: Dockerfile
     ports:
       - "8000:80"
     volumes:
-      - ./Gateway/gateway:/var/www/html  # Cambiado de ./app a ./Gateway/gateway
+      - ./Gateway/gateway:/var/www/html
     networks:
       - app-network
     depends_on:
       - mysql
-    working_dir: /var/www/html  # Añade esto para asegurar el directorio de trabajo
+    working_dir: /var/www/html
 
   flask:
     build:

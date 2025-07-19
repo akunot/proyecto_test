@@ -32,8 +32,8 @@ services:
       - "8002:80"
     networks:
       - app-network
-    volumes:
-      - ./Email/Email_microservice:/var/www/html
+    #volumes:
+    #  - ./Email/Email_microservice:/var/www/html
     working_dir: /var/www/html  # Añade esto para asegurar el directorio de trabajo
 
 

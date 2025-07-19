@@ -23,6 +23,8 @@ services:
       - "5000:5000"
     networks:
       - app-network
+    volumes:
+    - ./Flask/Flask_microservice/env.json:/app/env.json:ro
     restart: unless-stopped
 
   email:
